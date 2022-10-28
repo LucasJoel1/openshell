@@ -1,34 +1,52 @@
 #include <iostream>
 #include <filesystem>
-#include <fstream>
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <cstdio>
 
 using namespace std;
 
-int main() {
-    ofstream writeFile;
-    ifstream readFile;
-    string ch;
-    char text;
-    cout << "enter the text you want to write" << endl;
-    cin >> ch;
-    writeFile.open("./lol.txt");
-    if(writeFile) {
-        writeFile << ch;
-        cout<<"Data store Successfully: \n\n"<<endl;
-    } else cout << "Error 1: Unknown error while trying to open file";
-    writeFile.close();
-
-    readFile.open("./lol.txt", ios::in);
-    if(readFile) {
-        readFile.seekg(7, ios::beg); //skip first 7 bytes from beginning:
-        cout<<" The output( after skipping first 7 bytes) is: ";
-
-        while(!readFile.eof()) //read data from file till end of file:
-        {
-            readFile.get(text); //read data:
-            cout<<text;     //display data:
-        }
-    } else cout << "Error 1: Unknown error while trying to open file";
-    readFile.close();
+int edit() {
+    unsigned char buffer[16];
+    cout << "Enter Some Text";
+    cin >> buffer;
+    int fd = open("./hello.txt", O_RDONLY);
+    read(fd, buffer, sizeof(buffer));
     return 0;
+}
+
+void rmf() {
+    char file[] = "./lol.txt";
+    remove(file);
+}
+
+void rmd() {
+    remove("./test");
+}
+
+void mkf() {
+
+}
+
+void mkd() {
+
+}
+
+int main() {
+    string option;
+    cout << "what do you want to do: ";
+    cin >> option;
+    if (option == "edit") {
+        edit();
+    } else if (option == "rmf") {
+        rmf();
+    } else if (option == "rmd")
+    {
+        rmd();
+    }
+    
+    
 }
