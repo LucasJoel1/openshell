@@ -33,8 +33,11 @@ int edit() {
     return 0;
 }
 
-int read() {
-    return 0;
+string read(string path) {
+    int fd = open(path.c_str(), O_RDONLY);
+    char buffer[64];
+    read(fd, buffer, sizeof(buffer));
+    return buffer;
 }
 
 void rmf() {
@@ -75,27 +78,37 @@ void mkd() {
 //     return result;
 // }
 
+string getUserName() {
+    string env_user = getenv("USER");
+    return env_user;
+}
+
+string getMachineName() {
+    string env_machine = getenv("HOSTNAME");
+    return env_machine;
+}
+
+void clearScreen() {
+    cout << "\033[2J\033[1;1H";
+}
+
 
 int main() {
+    clearScreen();
     string option;
-    cout << "what do you want to do: ";
-    getline(cin, option);
-    // vector<string> command;
-    // if (option.find("-")) {
-    //     command = parseInput(option);
-    // } else {
-    //     command.push_back(option);
-    // }
-    // for(int i = 0; i < command.size(); i++) {
-    //     cout << command[i] << endl;
-    // }
-
-    if (option == "edit") {
-        edit();
-    } else if (option == "rmf") {
-        rmf();
-    } else if (option == "rmd")
-    {
-        rmd();
+    while(option != "exit") {
+        cout << "{" << getUserName() << "@" << getMachineName() << "}: ";
+        getline(cin, option);
+        if (option == "edit") {
+            edit();
+        } else if (option == "rmf") {
+            rmf();
+        } else if (option == "rmd")
+        {
+            rmd();
+        }
+        else if (option == "clear") {
+            clearScreen();
+        }
     }
 }
