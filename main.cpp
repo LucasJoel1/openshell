@@ -8,11 +8,19 @@
 #include <cstdio>
 #include <vector>
 #include <string>
+// #include "commands.h"
 
 using namespace std;
 
+string getUserName() {
+    string env_user = getenv("USER");
+    return env_user;
+}
 
-
+string getMachineName() {
+    string env_machine = getenv("HOSTNAME");
+    return env_machine;
+}
 
 int edit() {
     unsigned char buffer[16];
@@ -57,37 +65,6 @@ void mkd() {
 
 }
 
-// vector<string> parseInput(string input) {
-//     vector<string> result;
-//     string command;
-//     string temp;
-//     command = input.substr(0, input.find("-"));
-//     vector<string> parameters;
-//     for (int i = 1; i < input.length(); i++) {
-//         if (input[i] == '-') {
-//             for (int j = i + 1; 1 != 2; i++) {
-//                 if (!input[j] == '-') {
-//                     temp = temp + input[j];
-//                 } else {
-//                     parameters.push_back(temp);
-//                     temp.clear();
-//                     break;
-//                 }
-//             }
-//     }
-//     return result;
-// }
-
-string getUserName() {
-    string env_user = getenv("USER");
-    return env_user;
-}
-
-string getMachineName() {
-    string env_machine = getenv("HOSTNAME");
-    return env_machine;
-}
-
 void clearScreen() {
     cout << "\033[2J\033[1;1H";
 }
@@ -97,7 +74,7 @@ int main() {
     clearScreen();
     string option;
     while(option != "exit") {
-        cout << "{" << getUserName() << "@" << getMachineName() << "}: ";
+        cout << "[" << getUserName() << "@" << getMachineName() << "]# ";
         getline(cin, option);
         if (option == "edit") {
             edit();
@@ -111,4 +88,5 @@ int main() {
             clearScreen();
         }
     }
+    return 0;
 }
