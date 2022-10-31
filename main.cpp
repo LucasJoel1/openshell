@@ -22,7 +22,7 @@ string getMachineName() {
     return env_machine;
 }
 
-int edit() {
+void edit() {
     unsigned char buffer[16];
     int sizeOfBuffer = 0;
     cout << "Enter Some Text: ";
@@ -38,7 +38,6 @@ int edit() {
     read(fd, buffer, sizeof(temp));
     write(fd, temp, sizeof(temp));
     int fsync(int fd);
-    return 0;
 }
 
 string read(string path) {
