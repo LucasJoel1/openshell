@@ -13,13 +13,19 @@
 using namespace std;
 
 string getUserName() {
-    string env_user = getenv("USER");
+    string env_user = "user";
+    try {
+        env_user = getenv("USER");
+    } catch (const std::exception &e) {
+        env_user = getenv("LOGNAME");
+    }
     return env_user;
 }
 
 string getMachineName() {
-    string env_machine = getenv("HOSTNAME");
-    return env_machine;
+    char hostname_c[1024];
+    gethostname(hostname_c, 1024);
+    return hostname_c;
 }
 
 void edit() {
@@ -38,6 +44,10 @@ void edit() {
     read(fd, buffer, sizeof(temp));
     write(fd, temp, sizeof(temp));
     int fsync(int fd);
+}
+
+void bash() {
+    system("mkdir test /home/workspaces/terminal");
 }
 
 string read(string path) {
@@ -75,6 +85,17 @@ int main() {
     while(option != "exit") {
         cout << "[" << getUserName() << "@" << getMachineName() << "]# ";
         getline(cin, option);
+
+        if (option.find("bash")) {
+            string command = option.substr(option.find(" ") + 1);
+            // convert command into char
+            char command_c[command.length() + 1];
+            for (int i = 0; i < command.length(); i++) {
+                command_c[i] = command[i];
+            }
+            command_c[command.length()] = '\0';
+            system(command_c);
+        }
         if (option == "edit") {
             edit();
         } else if (option == "rmf") {
@@ -87,5 +108,5 @@ int main() {
             clearScreen();
         }
     }
-    // return 0;
+    return 0;
 }
