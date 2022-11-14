@@ -4,6 +4,7 @@
 #include "./commands/insert.h"
 #include "./commands/mk.h"
 #include "./commands/mkdir.h"
+#include "./commands/parser.h"
 #include "./commands/read.h"
 #include "./commands/rm.h"
 #include "./commands/rmdir.h"
